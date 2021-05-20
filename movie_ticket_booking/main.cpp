@@ -1,6 +1,7 @@
 #include "movie_tickrt_booking.h"
 #include "user.h"
 
+//code starts from here
 int main()
 {
     User *user=NULL;
