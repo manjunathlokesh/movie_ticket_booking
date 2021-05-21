@@ -14,12 +14,11 @@
 #include <errno.h>
 #include <bits/stdc++.h>
 #include <windows.h>
-using namespace std;
 #define SUCCESSFULL 0
 #define FAILED -1
 #define FOUND 2
 #define MAX_TRIES 3
-
+using namespace std;
 typedef struct user_data{
 
     string user_id;
@@ -34,4 +33,7 @@ int find_id(User *user,string id);
 int find_id_password(User *user,string passwd,string name);
 int update_data_base(User **user);
 int add_user_to_database(User **user,string id,string name,string password);
+int login(User **user);
+int signup(User **user);
+void display_menu();
 #endif // MOVIE_TICKRT_BOOKING_H_INCLUDED

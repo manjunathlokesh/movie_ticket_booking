@@ -1,15 +1,13 @@
 #include "movie_tickrt_booking.h"
-#include "user.h"
 
-//code starts from here
 int main()
 {
     User *user=NULL;
     int choice;
+    int choice_;
     char option;
-    int tries=MAX_TRIES;
-    string id,name,password;
     update_data_base(&user);
+    system("Color 70");
     cout << "   Welcome to login screen"<< endl;
     cout << "Do you want to login or signup" <<endl;
     do
@@ -22,60 +20,55 @@ int main()
         {
         case 1:
         {
-            cout << "Enter user name" << endl;
-            cin >> name;
-            while(FOUND != find_id(user,name))
+            if(login(&user) == FAILED)
             {
-                cout << "wrong id"<<endl;
-                cout << "Enter user name" << endl;
-                cin >> name;
+                cout << "\nLogin error\n" << endl;
+                break;
             }
-            while(tries--)
+            display_menu();
+            cout << "Enter your choice" << endl;
+            cin >> choice_;
+            switch(choice_)
             {
-                string try_=(tries != 1)? " tries left":" try left";
-                cout << "Enter password" << endl;
-                cin >> password;
-                if(FOUND == find_id_password(user,password,name))
-                {
-                    system("cls");
-                    cout << "login successful\n" << endl;
-                    cout << "Hello! " << name << endl;
-                    break;
-                }
-                if(tries==0)
-                {
-                    cout << "Login failed"<<endl;
-                    cout<<"wait for 10 seconds"<< endl;
-                    for(int i=1;i<=10;i++)
-                    {
-                        Sleep(1000);
-                    }
-                    tries=3;
-                    continue;
-                }
-                else
-                    cout << "!!wrong password "<< tries << try_ <<endl;
-
+            case 1:
+            {
+                //booking function
+                break;
+            }
+            case 2:
+            {
+                //browse movie function
+                break;
+            }
+            case 3:
+            {
+                //cancel booking function
+                break;
+            }
+            case 4:
+            {
+                //logout function
+                break;
+            }
+            case 5:
+            {
+                //sign-out function
+                break;
+            }
+            case 6:
+            {
+                //exit
+                break;
+            }
             }
             break;
         }
         case 2:
         {
-            string name_,id_,password_;
-            cout <<"Enter new user name"<< endl;
-            cin>>name_;
-            if(FOUND == find_id(user,name_))
-                {
-                    cout << "Username already exists" << endl;
-                    break;
-                }
-
-            cout <<"Enter new user ID"<< endl;
-            cin>>id_;
-            cout <<"Enter new user password"<< endl;
-            cin>>password_;
-
-            add_user_to_database(&user,id_,name_,password_);
+            if(signup(&user) == FAILED)
+            {
+                cout << "\nsignup error\n" << endl;
+            }
             break;
         }
         default:
