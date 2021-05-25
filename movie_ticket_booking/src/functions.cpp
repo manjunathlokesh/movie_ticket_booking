@@ -22,6 +22,31 @@ int insert_to_list(User **user,string id,string name,string passwd)
     temp->link=new_one;
     return 0;
 }
+int insert_to_theature_list(Theatre **theatre,string id,string seats,string location,string movie)
+{
+    Theatre *new_one,*temp;
+    new_one=new Theatre;
+    if(new_one == NULL)
+        cout << " malloc failed"<<endl;
+    new_one->id=id;
+    new_one->seats=seats;
+    new_one->location=location;
+    new_one->movie=movie;
+    new_one->link=NULL;
+    temp=*theatre;
+    if(temp == NULL)
+    {
+        *theatre=new_one;
+        return 0;
+    }
+    while(temp->link!= NULL)
+    {
+        temp=temp->link;
+    }
+    temp->link=new_one;
+
+    return 0;
+}
 
 int display_list(User *user)
 {
@@ -38,6 +63,38 @@ int display_list(User *user)
         user=user->link;
     }
     return 0;
+}
+int display_list_theatre(Theatre *theatre)
+{
+    if(theatre == NULL)
+    {
+        cout << "List empty" << endl;
+        return 0;
+    }
+    while(theatre)
+    {
+        cout << theatre->id << endl;
+        cout << theatre->seats << endl;
+        cout << theatre->location << endl;
+        cout << theatre->movie<< endl;
+        theatre=theatre->link;
+    }
+    return 0;
+}
+int display_movies(Theatre *theatre)
+{
+    if(theatre == NULL)
+    {
+        cout << "List empty" << endl;
+        return 0;
+    }
+    while(theatre)
+    {
+        cout <<"-->> "<< theatre->movie<< endl;
+        theatre=theatre->link;
+    }
+    return 0;
+
 }
 int find_id(User *user, string name)
 {
@@ -64,7 +121,7 @@ int find_id_password(User *user,string passwd,string name)
     }
     return 0;
 }
-int update_data_base(User **user)
+int update_user_data_base(User **user)
 {
     FILE *fptr = fopen("user_info.txt","r");
     char id[20];
@@ -75,6 +132,20 @@ int update_data_base(User **user)
         insert_to_list(user,id,name,password);
     }
     fclose(fptr);
+    return 0;
+}
+int update_theatre_data_base(Theatre **theatre)
+{
+    FILE *fpt = fopen("theatre_data.txt","r");
+    char id[10];
+    char seats[10];
+    char location[10];
+    char movie[30];
+    while(fscanf(fpt,"%s %s %s %s",id,seats,location,movie) != EOF)
+    {
+        insert_to_theature_list(theatre,id,seats,location,movie);
+    }
+    fclose(fpt);
     return 0;
 }
 int add_user_to_database(User **user,string id,string name,string password)
@@ -171,4 +242,32 @@ void display_menu()
     cout << setw(59)<< "4. Logout" << endl;
     cout << setw(60)<< "5. Signout" << endl;
     cout << setw(57)<< "6. exit" << endl;
+}
+int admin_login(void)
+{
+    string name,password;
+    cout<< "Enter admin name"<<endl;
+    cin >> name;
+    cout<< "Enter admin password"<<endl;
+    cin >> password;
+    if(name == ADMIN_NAME)
+    {
+        if(password == ADMIN_PASSWORD)
+        {
+            system("cls");
+            cout << setw(70)<< "Admin login successful\n" << endl;
+            cout << setw(59)<<"Hello Admin! " << name << "\n" << endl;
+            return SUCCESSFULL;
+        }
+    }
+    return FAILED;
+}
+void display_admin_menu()
+{
+    cout << setw(57)<< "MENU" << endl;
+    cout << setw(63)<< "1. ADD theatre" << endl;
+    cout << setw(66)<< "3. Delete theatre" << endl;
+    cout << setw(63)<< "4. Remove user" << endl;
+    cout << setw(59)<< "5. Signout" << endl;
+    cout << setw(56)<< "6. exit" << endl;
 }

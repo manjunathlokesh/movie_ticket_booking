@@ -18,6 +18,9 @@
 #define FAILED -1
 #define FOUND 2
 #define MAX_TRIES 3
+#define ADMIN_NAME "imtheadmin"
+#define ADMIN_PASSWORD "letmein"
+#define ADMIN_EMAIL "manjunath.lokesh12@gmail.com"
 using namespace std;
 typedef struct user_data{
 
@@ -27,13 +30,27 @@ typedef struct user_data{
     struct user_data *link;
 }User;
 
+typedef struct theatre_data{
+
+    string  id;
+    string  location;
+    string  seats;
+    string  movie;
+    struct theatre_data *link;
+}Theatre;
 int insert_to_list(User **user,string word,string word1,string word2);
+int insert_to_theature_list(Theatre **theatre,string id,string seats,string location,string  movie);
 int display_list(User *user);
+int display_list_theatre(Theatre *user);
+int display_movies(Theatre *theatre);
 int find_id(User *user,string id);
 int find_id_password(User *user,string passwd,string name);
-int update_data_base(User **user);
+int update_user_data_base(User **user);
+int update_theatre_data_base(Theatre **theatre);
 int add_user_to_database(User **user,string id,string name,string password);
+int admin_login(void);
 int login(User **user);
 int signup(User **user);
 void display_menu();
+void display_admin_menu();
 #endif // MOVIE_TICKRT_BOOKING_H_INCLUDED
