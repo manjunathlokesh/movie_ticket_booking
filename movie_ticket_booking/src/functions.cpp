@@ -106,6 +106,16 @@ int find_id(User *user, string name)
     }
     return 0;
 }
+int find_theatre(Theatre *theatre, string movie)
+{
+    while(theatre)
+    {
+        if(theatre->movie == movie)
+            return FOUND;
+        theatre=theatre->link;
+    }
+    return 0;
+}
 int find_id_password(User *user,string passwd,string name)
 {
     while(user)
@@ -171,6 +181,34 @@ int add_user_to_database(User **user,string id,string name,string password)
     fclose(fptr);
     return 0;
 }
+int add_movie_to_database(Theatre **theatre,string id,string location,string seats,string movie)
+{
+    char id_[10]= {'\0'};
+    char location_[20]= {'\0'};
+    char seats_[20]= {'\0'};
+    char movie_[20]= {'\0'};
+    for(int i=0; isalnum(id[i]); i++)
+    {
+        id_[i]=id[i];
+    }
+    for(int i=0; isalnum(location[i]); i++)
+    {
+        location_[i]=location[i];
+    }
+    for(int i=0; isalnum(seats[i]); i++)
+    {
+        seats_[i]=seats[i];
+    }
+    for(int i=0; isalnum(movie[i]); i++)
+    {
+        movie_[i]=movie[i];
+    }
+    FILE *fptr = fopen("theatre_data.txt","a");
+    insert_to_theature_list(theatre,id,location,seats,movie);
+    fprintf(fptr,"%s %s %s %s\n",id_,location_,seats_,movie_);
+    fclose(fptr);
+    return 0;
+}
 int login(User **user)
 {
     string name,password;
@@ -233,6 +271,28 @@ int signup(User **user)
     add_user_to_database(user,id_,name_,password_);
     return SUCCESSFULL;
 }
+int add_theatre(Theatre **theatre)
+{
+
+    string id_,location_,seats_,movie_;
+
+    cout <<"Enter movie name"<< endl;
+    cin>>movie_;
+    if(FOUND == find_theatre(*theatre,movie_))
+    {
+        cout << "Theatre already exists" << endl;
+        return FAILED;
+    }
+    cout <<"Enter new  ID"<< endl;
+    cin>>id_;
+    cout <<"Enter new  location"<< endl;
+    cin>>location_;
+    cout <<"Enter no of  seats"<< endl;
+    cin>>seats_;
+
+    add_movie_to_database(theatre,id_,location_,seats_,movie_);
+    return SUCCESSFULL;
+}
 void display_menu()
 {
     cout << setw(62)<< "MENU" << endl;
@@ -266,8 +326,63 @@ void display_admin_menu()
 {
     cout << setw(57)<< "MENU" << endl;
     cout << setw(63)<< "1. ADD theatre" << endl;
-    cout << setw(66)<< "3. Delete theatre" << endl;
-    cout << setw(63)<< "4. Remove user" << endl;
-    cout << setw(59)<< "5. Signout" << endl;
-    cout << setw(56)<< "6. exit" << endl;
+    cout << setw(66)<< "2. Delete theatre" << endl;
+    cout << setw(63)<< "3. Remove user" << endl;
+    cout << setw(59)<< "4. Signout" << endl;
+    cout << setw(56)<< "5. exit" << endl;
+}
+int search_movie(Theatre *theatre,string movie)
+{
+    if(theatre == NULL)
+    {
+        cout << "List empty" << endl;
+        return 0;
+    }
+    while(theatre)
+    {
+        if(theatre->movie == movie)
+            return SUCCESSFULL;
+        theatre=theatre->link;
+    }
+    return FAILED;
+
+}
+int search_seats(Theatre *theatre,int  seats,string movie)
+{
+    if(theatre == NULL)
+    {
+        cout << "List empty" << endl;
+        return 0;
+    }
+    while(theatre)
+    {
+        if(theatre->movie == movie)
+        {
+            stringstream geek(theatre->seats);
+            int x = 0;
+            geek >> x;
+            if( x >= seats)
+            return SUCCESSFULL;
+        }
+        theatre=theatre->link;
+    }
+    return FAILED;
+
+}
+int book_movie_ticket(Theatre **theatre,string movie)
+{
+    int no_seats;
+    if(search_movie(*theatre,movie) == FAILED)
+    {
+        cout<< "No such movies found"<<endl;
+        return FAILED;
+    }
+    cout<<"Enter the number of seats to book"<< endl;
+    cin>>no_seats;
+    if(search_seats(*theatre,no_seats,movie) == FAILED)
+    {
+        cout<< "Sorry House full"<<endl;
+        return FAILED;
+    }
+    return SUCCESSFULL;
 }

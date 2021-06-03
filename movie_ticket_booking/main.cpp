@@ -36,6 +36,13 @@ int main()
             {
                 //booking function
                 system("cls");
+                string movie;
+                cout<< "Enter the movie to book ticket"<< endl;
+                cin >> movie;
+                if(book_movie_ticket(&theatre,movie) == FAILED)
+                {
+                    cout<<"Booking Failed"<<endl;
+                }
                 break;
             }
             case 2:
@@ -93,6 +100,7 @@ int main()
             {
 
                 system("cls");
+                add_theatre(&theatre);
                 break;
             }
             case 2:
@@ -116,13 +124,7 @@ int main()
                 //sign-out function
                 break;
             }
-            case 6:
-            {
-                //exit
-                break;
             }
-            }
-
             break;
 
         }
