@@ -1,5 +1,5 @@
-#include "movie_tickrt_booking.h"
-int main()
+#include ".\include\movie_tickrt_booking.h"
+int main() 
 {
     User *user=NULL;
     Theatre *theatre=NULL;

@@ -1,4 +1,4 @@
-#include "movie_tickrt_booking.h"
+#include "..\include\movie_tickrt_booking.h"
 int insert_to_list(User **user,string id,string name,string passwd)
 {
     User *new_one,*temp;
