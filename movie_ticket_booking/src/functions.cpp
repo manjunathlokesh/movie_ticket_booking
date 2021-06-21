@@ -1,4 +1,4 @@
-#include "..\include\movie_tickrt_booking.h"
+#include "movie_tickrt_booking.h"
 int insert_to_list(User **user,string id,string name,string passwd)
 {
     User *new_one,*temp;
@@ -249,7 +249,7 @@ int login(User **user)
             cout << "!!wrong password "<< tries << try_ <<endl;
 
     }
-    return FAILED;
+    return FAILED_;
 }
 int signup(User **user)
 {
@@ -261,7 +261,7 @@ int signup(User **user)
     if(FOUND == find_id(*user,name_))
     {
         cout << "Username already exists" << endl;
-        return FAILED;
+        return FAILED_;
     }
     cout <<"Enter new user ID"<< endl;
     cin>>id_;
@@ -281,7 +281,7 @@ int add_theatre(Theatre **theatre)
     if(FOUND == find_theatre(*theatre,movie_))
     {
         cout << "Theatre already exists" << endl;
-        return FAILED;
+        return FAILED_;
     }
     cout <<"Enter new  ID"<< endl;
     cin>>id_;
@@ -320,7 +320,7 @@ int admin_login(void)
             return SUCCESSFULL;
         }
     }
-    return FAILED;
+    return FAILED_;
 }
 void display_admin_menu()
 {
@@ -344,7 +344,7 @@ int search_movie(Theatre *theatre,string movie)
             return SUCCESSFULL;
         theatre=theatre->link;
     }
-    return FAILED;
+    return FAILED_;
 
 }
 int search_seats(Theatre *theatre,int  seats,string movie)
@@ -366,23 +366,23 @@ int search_seats(Theatre *theatre,int  seats,string movie)
         }
         theatre=theatre->link;
     }
-    return FAILED;
+    return FAILED_;
 
 }
 int book_movie_ticket(Theatre **theatre,string movie)
 {
     int no_seats;
-    if(search_movie(*theatre,movie) == FAILED)
+    if(search_movie(*theatre,movie) == FAILED_)
     {
         cout<< "No such movies found"<<endl;
-        return FAILED;
+        return FAILED_;
     }
     cout<<"Enter the number of seats to book"<< endl;
     cin>>no_seats;
-    if(search_seats(*theatre,no_seats,movie) == FAILED)
+    if(search_seats(*theatre,no_seats,movie) == FAILED_)
     {
         cout<< "Sorry House full"<<endl;
-        return FAILED;
+        return FAILED_;
     }
     return SUCCESSFULL;
 }

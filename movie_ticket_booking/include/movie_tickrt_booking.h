@@ -15,7 +15,7 @@
 #include <bits/stdc++.h>
 #include <windows.h>
 #define SUCCESSFULL 0
-#define FAILED -1
+#define FAILED_ -1
 #define FOUND 2
 #define MAX_TRIES 3
 #define ADMIN_NAME "imtheadmin"

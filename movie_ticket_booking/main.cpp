@@ -1,5 +1,5 @@
-#include ".\include\movie_tickrt_booking.h"
-int main() 
+#include "movie_tickrt_booking.h"
+int main()
 {
     User *user=NULL;
     Theatre *theatre=NULL;
@@ -8,12 +8,12 @@ int main()
     char option;
     update_user_data_base(&user);
     update_theatre_data_base(&theatre);
-    system("Color 70");
-    cout << "   Welcome to login screen"<< endl;
-    cout << "Do you want to login or signup" <<endl;
     do
     {
-
+        system("cls");
+        system("Color 70");
+        cout << "   Welcome to login screen"<< endl;
+        cout << "Do you want to login or signup" <<endl;
         cout << "1.Login"<<endl;
         cout << "2.signup"<<endl;
         cout << "3.admin login"<< endl;
@@ -22,11 +22,12 @@ int main()
         {
         case 1:
         {
-            if(login(&user) == FAILED)
+            if(login(&user) == FAILED_)
             {
                 cout << "\nLogin error\n" << endl;
                 break;
             }
+user_menu:
             display_menu();
             cout << "Enter your choice" << endl;
             cin >> choice_;
@@ -39,10 +40,12 @@ int main()
                 string movie;
                 cout<< "Enter the movie to book ticket"<< endl;
                 cin >> movie;
-                if(book_movie_ticket(&theatre,movie) == FAILED)
+                if(book_movie_ticket(&theatre,movie) == FAILED_)
                 {
-                    cout<<"Booking Failed"<<endl;
+                    cout<<"Booking FAILED"<<endl;
                 }
+                system("cls");
+                goto user_menu;
                 break;
             }
             case 2:
@@ -59,6 +62,8 @@ int main()
             }
             case 4:
             {
+                system("cls");
+                goto EXIT;
                 //logout function
                 break;
             }
@@ -69,7 +74,8 @@ int main()
             }
             case 6:
             {
-                //exit
+                system("cls");
+                goto EXIT;
                 break;
             }
             }
@@ -77,7 +83,7 @@ int main()
         }
         case 2:
         {
-            if(signup(&user) == FAILED)
+            if(signup(&user) == FAILED_)
             {
                 cout << "\nsignup error\n" << endl;
             }
@@ -86,7 +92,7 @@ int main()
         case 3:
         {
 
-            if(admin_login() == FAILED)
+            if(admin_login() == FAILED_)
             {
                 cout << "\nLogin error\n" << endl;
                 break;
@@ -131,6 +137,7 @@ int main()
         default:
             cout << "wrong choice" << endl;
         }
+EXIT:
         cout << "do you want to continue?(y/n)"<< endl;
         cin >> option;
     }
