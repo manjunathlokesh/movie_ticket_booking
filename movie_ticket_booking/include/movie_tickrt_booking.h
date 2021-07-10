@@ -50,13 +50,14 @@ int update_user_data_base(User **user);
 int update_theatre_data_base(Theatre **theatre);
 int add_user_to_database(User **user,string id,string name,string password);
 int add_movie_to_database(Theatre **theatre,string id,string location,string seats,string movie);
+int add_booking_to_database(string name,string id,string moive,string seats);
 int add_theatre(Theatre **theatre);
 int admin_login(void);
 int login(User **user);
 int signup(User **user);
 void display_menu();
 void display_admin_menu();
-int search_movie(Theatre *theatre,string movie);
+int search_movie(Theatre *theatre,string movie,string *id,string *movie_);
 int search_seats(Theatre *theatre,int seats,string movie);
-int book_movie_ticket(Theatre **theatre,string movie);
+int book_movie_ticket(User *user,Theatre **theatre,string movie);
 #endif // MOVIE_TICKRT_BOOKING_H_INCLUDED

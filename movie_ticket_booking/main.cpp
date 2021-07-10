@@ -40,7 +40,7 @@ user_menu:
                 string movie;
                 cout<< "Enter the movie to book ticket"<< endl;
                 cin >> movie;
-                if(book_movie_ticket(&theatre,movie) == FAILED_)
+                if(book_movie_ticket(user,&theatre,movie) == FAILED_)
                 {
                     cout<<"Booking FAILED"<<endl;
                 }

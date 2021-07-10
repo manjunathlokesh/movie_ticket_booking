@@ -209,6 +209,28 @@ int add_movie_to_database(Theatre **theatre,string id,string location,string sea
     fclose(fptr);
     return 0;
 }
+int add_booking_to_database(string user_name,string id,string movie,int seats)
+{
+    char movie_[20]= {'\0'};
+    char id_[10]= {'\0'};
+    char user_name_[20]={'\0'};
+    for(int i=0; isalnum(id[i]); i++)
+    {
+        id_[i]=id[i];
+    }
+     for(int i=0; isalnum(user_name[i]); i++)
+    {
+        user_name_[i]=user_name[i];
+    }
+    for(int i=0; isalnum(movie[i]); i++)
+    {
+        movie_[i]=movie[i];
+    }
+    FILE *fptr = fopen("booking_info.txt","a");
+    fprintf(fptr,"%s %s %d %s\n",user_name_,id_,seats,movie_);
+    fclose(fptr);
+    return 0;
+}
 int login(User **user)
 {
     string name,password;
@@ -331,7 +353,7 @@ void display_admin_menu()
     cout << setw(59)<< "4. Signout" << endl;
     cout << setw(56)<< "5. exit" << endl;
 }
-int search_movie(Theatre *theatre,string movie)
+int search_movie(Theatre *theatre,string movie,string *id,string *movie_)
 {
     if(theatre == NULL)
     {
@@ -341,7 +363,11 @@ int search_movie(Theatre *theatre,string movie)
     while(theatre)
     {
         if(theatre->movie == movie)
+        {
+            *id=theatre->id;
+            *movie_=theatre->movie;
             return SUCCESSFULL;
+        }
         theatre=theatre->link;
     }
     return FAILED_;
@@ -369,10 +395,12 @@ int search_seats(Theatre *theatre,int  seats,string movie)
     return FAILED_;
 
 }
-int book_movie_ticket(Theatre **theatre,string movie)
+int book_movie_ticket(User *user,Theatre **theatre,string movie)
 {
     int no_seats;
-    if(search_movie(*theatre,movie) == FAILED_)
+    string id="";
+    string movie_="";
+    if(search_movie(*theatre,movie,&id,&movie_) == FAILED_)
     {
         cout<< "No such movies found"<<endl;
         return FAILED_;
@@ -384,5 +412,7 @@ int book_movie_ticket(Theatre **theatre,string movie)
         cout<< "Sorry House full"<<endl;
         return FAILED_;
     }
+    add_booking_to_database(user->user_name,id,movie_,no_seats);
+
     return SUCCESSFULL;
 }
